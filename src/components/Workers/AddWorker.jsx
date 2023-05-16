@@ -7,6 +7,8 @@ const AddWorker = () => {
 
   const [enteredWage, setEnteredWage] = useState("");
 
+  const minimumWage = 5000;
+
   const workerNameHandler = (e) => {
     setEnteredName(e.target.value);
   };
@@ -17,6 +19,16 @@ const AddWorker = () => {
 
   const addWorkerHandler = (e) => {
     e.preventDefault();
+    if (enteredName.trim() === "" || enteredWage.trim() === "") {
+      return;
+    }
+
+    if (+enteredWage < minimumWage) {
+      return;
+    }
+
+    setEnteredName("");
+    setEnteredWage("");
     console.log(enteredName, enteredWage);
   };
 
@@ -32,6 +44,7 @@ const AddWorker = () => {
           placeholder="Çalışan İsmi Giriniz"
           id="name"
           onChange={workerNameHandler}
+          value={enteredName}
         ></input>
         <label htmlFor="wage" className="font-medium">
           Maaş Miktarı
@@ -42,6 +55,7 @@ const AddWorker = () => {
           placeholder="Maaş Miktarı Giriniz"
           id="wage"
           onChange={wageHandler}
+          value={enteredWage}
         ></input>
         <Button className="mt-2" type="submit">
           Ekle
