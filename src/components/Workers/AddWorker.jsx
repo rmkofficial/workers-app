@@ -9,7 +9,7 @@ const AddWorker = () => {
 
   const minimumWage = 5000;
 
-  const workerNameHandler = (e) => {
+  const nameHandler = (e) => {
     setEnteredName(e.target.value);
   };
 
@@ -43,7 +43,7 @@ const AddWorker = () => {
           className="max-w-[40rem] w-full mx-auto border p-2"
           placeholder="Çalışan İsmi Giriniz"
           id="name"
-          onChange={workerNameHandler}
+          onChange={nameHandler}
           value={enteredName}
         ></input>
         <label htmlFor="wage" className="font-medium">
