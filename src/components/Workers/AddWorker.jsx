@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
+import ErrorModal from "../UI/ErrorModal";
 
 const AddWorker = (props) => {
   const [enteredName, setEnteredName] = useState("");
@@ -40,7 +41,9 @@ const AddWorker = (props) => {
   };
 
   return (
-    <Card className="mt-10">
+    <div>
+      <ErrorModal />
+      <Card className="mt-10">
       <form className="flex flex-col gap-y-2" onSubmit={addWorkerHandler}>
         <label htmlFor="name" className="font-medium">
           Çalışan İsmi
@@ -69,6 +72,7 @@ const AddWorker = (props) => {
         </Button>
       </form>
     </Card>
+    </div>
   );
 };
 
