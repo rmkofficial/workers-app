@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 
-const AddWorker = () => {
+const AddWorker = (props) => {
   const [enteredName, setEnteredName] = useState("");
 
   const [enteredWage, setEnteredWage] = useState("");
@@ -27,9 +27,16 @@ const AddWorker = () => {
       return;
     }
 
+    props.setWorkers((prevState) => [
+      {
+        id: Math.floor(Math.random() * 1000),
+        name: enteredName,
+        wage: enteredWage,
+      },
+      ...prevState,
+    ]);
     setEnteredName("");
     setEnteredWage("");
-    console.log(enteredName, enteredWage);
   };
 
   return (

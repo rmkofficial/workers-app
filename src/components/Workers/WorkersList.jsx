@@ -1,6 +1,15 @@
 import Card from "../UI/Card";
 
 export const WorkersList = (props) => {
+  const { workers, setWorkers } = props;
+
+  if (workers.length < 1) {
+    return;
+  }
+
+  const deleteWorker = (id) => {
+    setWorkers(workers.filter((item) => item.id !== id));
+  };
   return (
     <Card className="mt-10">
       <ul>
@@ -9,9 +18,13 @@ export const WorkersList = (props) => {
           <span className="font-bold">Maaş</span>
         </li>
         {props.workers.map((worker) => (
-          <li className="flex justify-between cursor-pointer hover:shadow-xl hover:text-red-400 p-2">
-            <span>Ramazan Mert Kaya</span>
-            <span className="text-teal-700 font-medium">6000</span>
+          <li
+            className="flex justify-between cursor-pointer hover:shadow-xl hover:text-red-400 p-2"
+            key={worker.id}
+            onClick={() => deleteWorker(worker.id)}
+          >
+            <span>{worker.name}</span>
+            <span className="text-teal-700 font-medium">{worker.wage}</span>
           </li>
         ))}
       </ul>
