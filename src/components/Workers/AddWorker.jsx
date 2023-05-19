@@ -1,29 +1,21 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import ErrorModal from "../UI/ErrorModal";
 import Wrapper from "../Helpers/Wrapper";
 
 const AddWorker = (props) => {
-  const [enteredName, setEnteredName] = useState("");
-
-  const [enteredWage, setEnteredWage] = useState("");
-
   const [error, setError] = useState("");
+  const nameInputRef = useRef();
+  const wageInputRef = useRef();
 
   const minimumWage = 5000;
 
-  const nameHandler = (e) => {
-    setEnteredName(e.target.value);
-  };
-
-  const wageHandler = (e) => {
-    setEnteredWage(e.target.value);
-  };
-
   const addWorkerHandler = (e) => {
     e.preventDefault();
-    if (enteredName.trim() === "") {
+    const enteredName = nameInputRef.current.value;
+    const enteredWage = wageInputRef.current.value;
+    if (nameInputRef.current.value.trim() === "") {
       setError({
         title: "İsim alanı zorunludur!",
         message: "Lütfen bir isim giriniz.",
@@ -31,7 +23,7 @@ const AddWorker = (props) => {
       return;
     }
 
-    if (+enteredWage < minimumWage) {
+    if (+wageInputRef.current.value < minimumWage) {
       setError({
         title: "Maaş alanı zorunludur!",
         message: `Lütfen ${minimumWage} değerinden büyük bir maaş değeri giriniz.`,
@@ -47,8 +39,8 @@ const AddWorker = (props) => {
       },
       ...prevState,
     ]);
-    setEnteredName("");
-    setEnteredWage("");
+    nameInputRef.current.value = "";
+    wageInputRef.current.value = "";
   };
 
   const errorHandler = () => {
@@ -68,8 +60,7 @@ const AddWorker = (props) => {
             className="max-w-[40rem] w-full mx-auto border p-2"
             placeholder="Çalışan İsmi Giriniz"
             id="name"
-            onChange={nameHandler}
-            value={enteredName}
+            ref={nameInputRef}
           ></input>
           <label htmlFor="wage" className="font-medium">
             Maaş Miktarı
@@ -79,8 +70,7 @@ const AddWorker = (props) => {
             className="max-w-[40rem] w-full mx-auto border p-2"
             placeholder="Maaş Miktarı Giriniz"
             id="wage"
-            onChange={wageHandler}
-            value={enteredWage}
+            ref={wageInputRef}
           ></input>
           <Button className="mt-2" type="submit">
             Ekle
