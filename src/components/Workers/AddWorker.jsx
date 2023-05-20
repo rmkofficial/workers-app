@@ -49,7 +49,7 @@ const AddWorker = (props) => {
 
   return (
     <Wrapper>
-      {error && <ErrorModal onConfirm={errorHandler} error={error} />}
+      {error && <ErrorModal setWorkers={props.setWorkes} onConfirm={errorHandler} error={error} />}
       <Card className="mt-10">
         <form className="flex flex-col gap-y-2" onSubmit={addWorkerHandler}>
           <label htmlFor="name" className="font-medium">

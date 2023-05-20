@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import Button from "./Button";
 import Card from "./Card";
@@ -33,12 +33,27 @@ const ModalOverlay = (props) => {
 };
 
 const ErrorModal = (props) => {
-  const { title, message } = props.error; // Access title and message from props.error
+  const { title, message } = props.error;
   const handleConfirm = () => {
     if (props.onConfirm) {
       props.onConfirm();
     }
   };
+  const cleanUpRef = useRef();
+
+  useEffect(() => {
+    return () => {
+      if (cleanUpRef.current) {
+        props.setWorkers([]);
+      }
+    };
+  }, [cleanUpRef, props]);
+
+  useEffect(() => {
+    return () => {
+      cleanUpRef.current = true;
+    };
+  }, []);
 
   return (
     <>
@@ -49,7 +64,8 @@ const ErrorModal = (props) => {
       {ReactDOM.createPortal(
         <ModalOverlay
           error={{ title, message }}
-          handleConfirm={handleConfirm}/>,
+          handleConfirm={handleConfirm}
+        />,
         document.getElementById("overlay-root")
       )}
     </>
